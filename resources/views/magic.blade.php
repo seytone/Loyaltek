@@ -232,7 +232,7 @@
     <!-- Axios -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- Custom JavaScript -->
-    <script src="{{ asset('css/magic.css') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/magic.js') }}" type="text/javascript"></script>
 </body>
 
 </html>
