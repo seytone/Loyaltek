@@ -19,7 +19,8 @@ Route::get('/', [MainController::class, 'index'])->name('magic');
 Route::group(['prefix' => 'magic', 'as' => 'magic.'], function () {
     Route::get('/', [MainController::class, 'index'])->name('home');
     Route::post('search', [MainController::class, 'search'])->name('search');
-    Route::get('card/{id}', [MainController::class, 'details'])->name('card');
+    Route::get('card/{id}', [MainController::class, 'card'])->name('card');
+    Route::get('details/{id}', [MainController::class, 'details'])->name('details');
     Route::get('include/{id}', [MainController::class, 'include'])->name('include');
     Route::get('exclude/{id}', [MainController::class, 'exclude'])->name('exclude');
 });

@@ -75,9 +75,65 @@ class MainController extends Controller
         ]);
     }
 
-    public function details($id)
+    public function card($id)
     {
         $card = Card::find($id);
+
+        if (!isset($card))
+        {
+            return response()->json([
+                'code' => 422,
+                'status' => 'error',
+                'result' => false,
+            ]);
+        }
+
+        $default = 'https://upload.wikimedia.org/wikipedia/en/thumb/a/aa/Magic_the_gathering-card_back.jpg/220px-Magic_the_gathering-card_back.jpg';
+        $details = '
+            <div class="text-center">
+                <img src="' . ($card->imageUrl ?? $default) . '" class="img-fluid w-100 rounded mb-3" alt="' . $card->name . '">
+            </div>
+            <hr>
+            <h5 class="card-title">' . ($card->name ?? '---') . '</h5>
+            <h6 class="card-subtitle text-muted">' . ($card->type ?? '---') . '</h6>
+            <hr>
+            <div class="card-text row">
+                <div class="col">
+                    <small>
+                        <b>CMC:</b> ' . ($card->cmc ?? '---') . '<br>
+                        <b>Number:</b> ' . ($card->number ?? '---') . '<br>
+                        <b>Rarity:</b> ' . ($card->rarity ?? '---') . '<br>
+                        <b>Colors:</b> ' . (isset($card->colorIdentity) ? json_encode($card->colorIdentity) : '---') . '<br>
+                        <b>Mana Cost:</b> ' . ($card->manaCost ?? '---') . '<br>
+                        <b>Multiverse ID:</b> ' . ($card->multiverseid ?? '---') . '
+                    </small>
+                </div>
+                <div class="col">
+                    <small>
+                        <b>Set:</b> ' . ($card->set ?? '---') . '<br>
+                        <b>Set Name:</b> ' . ($card->setName ?? '---') . '<br>
+                        <b>Artist:</b> ' . ($card->artist ?? '---') . '<br>
+                        <b>Types:</b> ' . (isset($card->types) ? json_encode($card->types) : '---') . '<br>
+                        <b>Subtypes:</b> ' . (isset($card->subtypes) ? json_encode($card->subtypes) : '---') . '<br>
+                        <b>Power:</b> ' . ($card->power ?? '---') . '
+                    </small>
+                </div>
+            </div>
+            <hr>
+            <p>' . ($card->text ?? '---') . '</p>
+            <p>' . ($card->flavor ?? '---') . '</p>
+        ';
+
+        return response()->json([
+            'code' => 200,
+            'status' => 'success',
+            'result' => $details
+        ]);
+    }
+
+    public function details($id)
+    {
+        $card = Deck::find($id);
 
         if (!isset($card))
         {
