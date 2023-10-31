@@ -2,56 +2,18 @@
 <html lang="en">
 
 <head>
-    <title>Magic: The Gathering</title>
+    <title>Magic: The Gathering | Loyaltek Assessment</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" sizes="16x16" href="https://magic.wizards.com/assets/favicon.ico">
 
+    <!-- Font Awesome v4.7.0 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
-
     <!-- Bootstrap CSS v5.2.1 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-
-    <style>
-        section {
-            /* padding: 0 !important; */
-            overflow: hidden;
-            position: relative;
-        }
-        .main {
-            position: relative;
-            overflow: hidden;
-            z-index: 2;
-        }
-        .layer {
-            background-color: rgba(0, 0, 0, 0.75);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-        .bg {
-            background-image: url("https://magicthegathering.io/images/bg.jpg");
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: cover;
-            position: absolute;
-            filter: blur(5px);
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-        }
-        .custom-card .card-title {
-            min-height: 60px;
-        }
-        .custom-card .card-subtitle {
-            min-height: 50px;
-        }
-    </style>
+    <!-- Custom CSS -->
+    <link href="{{ asset('css/magic.css') }}" rel="stylesheet" />
 </head>
 
 <body class="bg-dark">
@@ -115,7 +77,7 @@
                                                         <a href="{{ route('magic.card', $card->multiverseid) }}" class="cardDetails btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#cardDetails" title="SEE DETAILS"><i class="fa fa-fw fa-eye"></i></a>
                                                     </div>
                                                     <div class="col px-0">
-                                                        <h6 class="text-center text-danger my-0" style="top:-5px; position: relative;"><small class="text-muted">cmc</small><br>{{ $card->cmc ?? '---' }}</h6>
+                                                        <h6 class="text-center text-danger my-0 cmc"><small class="text-muted">cmc</small><br>{{ $card->cmc ?? '---' }}</h6>
                                                     </div>
                                                     <div class="col pl-0">
                                                         <a href="{{ route('magic.exclude', $card->id) }}" class="cardExclude btn btn-sm btn-outline-secondary" title="REMOVE FROM DECK"><i class="fa fa-fw fa-trash"></i></a>
@@ -142,7 +104,7 @@
         </div>
     </footer>
 
-    <!-- Modal Cards List -->
+    <!-- Modal Cards Listing -->
     <div class="modal fade" id="cardFinder" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="cardFinderLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
             <div class="modal-content bg-secondary">
@@ -265,93 +227,12 @@
             integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
             integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous"></script>
-
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <!-- Axios -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            $('#cardFinder').on('shown.bs.modal', function () {
-                $('#searchForm input').trigger('focus');
-            })
-
-            $('#searchForm').on('submit', function(e) {
-                e.preventDefault();
-                var url = $(this).attr('action');
-                var data = $(this).serialize();
-                axios
-                    .post(url, data)
-                    .then(function (response) {
-                        if (response.data.status == 'success') {
-                            $('#searchResult').html(response.data.result);
-                        } else {
-                            $('#searchResult').html('<tr><td colspan="9" class="text-center"><h4 class="alert-heading">No Cards Found!</h4><p>There are no cards for your search. Try by searching with a different search terms.</p></td></tr>');
-                        }
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-            });
-
-            $('body').on('click', '.cardDetails', function(e) {
-                e.preventDefault();
-                var url = $(this).attr('href');
-                axios
-                    .get(url)
-                    .then(function (response) {
-                        if (response.data.status == 'success') {
-                            $('#cardDetailBox').html(response.data.result);
-                        } else {
-                            $('#cardDetailBox').html('<h4 class="alert-heading">Card doesn\'t exists!</h4><p>There are no details for this card.</p>');
-                        }
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-            });
-
-            $('body').on('click', '.cardInclude', function(e) {
-                e.preventDefault();
-                var url = $(this).attr('href');
-                axios
-                    .get(url)
-                    .then(function (response) {
-                        if (response.data.status == 'success') {
-                            $('#cardsDeck').html(response.data.result);
-                            $('#manaCost').html(response.data.mana);
-                        } else {
-                            $('#cardsDeck').html('<div class="col text-center text-white"><h4 class="alert-heading">No Cards in Deck!</h4><p>There are no cards in your deck. Please add some cards to your deck.</p><hr><p class="mb-0 text-muted">Click on the button below to search for new cards.</p><br><button type="button" class="btn btn-dark text-uppercase" data-bs-toggle="modal" data-bs-target="#cardFinder">Search for new Cards</button><br><br></div>');
-                            $('#manaCost').html('0');
-                        }
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-            });
-
-            $('body').on('click', '.cardExclude', function(e) {
-                e.preventDefault();
-                var url = $(this).attr('href');
-                axios
-                    .get(url)
-                    .then(function (response) {
-                        if (response.data.status == 'success') {
-                            $('#cardsDeck').html(response.data.result);
-                            $('#manaCost').html(response.data.mana);
-                        } else {
-                            $('#cardsDeck').html('<div class="col text-center text-white"><h4 class="alert-heading">No Cards in Deck!</h4><p>There are no cards in your deck. Please add some cards to your deck.</p><hr><p class="mb-0 text-muted">Click on the button below to search for new cards.</p><br><button type="button" class="btn btn-dark text-uppercase" data-bs-toggle="modal" data-bs-target="#cardFinder">Search for new Cards</button><br><br></div>');
-                            $('#manaCost').html('0');
-                        }
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-            });
-        });
-    </script>
+    <!-- Custom JavaScript -->
+    <script src="{{ asset('css/magic.css') }}" type="text/javascript"></script>
 </body>
 
 </html>
