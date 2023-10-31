@@ -12,6 +12,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
     <!-- Bootstrap CSS v5.2.1 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <!-- Sweet Alert -->
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="{{ asset('css/magic.css') }}" rel="stylesheet" />
 </head>
@@ -74,7 +76,7 @@
                                                 <hr>
                                                 <div class="row text-center">
                                                     <div class="col pr-0">
-                                                        <a href="{{ route('magic.card', $card->multiverseid) }}" class="cardDetails btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#cardDetails" title="SEE DETAILS"><i class="fa fa-fw fa-eye"></i></a>
+                                                        <a href="{{ route('magic.details', $card->id) }}" class="cardDetails btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#cardDetails" title="SEE DETAILS"><i class="fa fa-fw fa-eye"></i></a>
                                                     </div>
                                                     <div class="col px-0">
                                                         <h6 class="text-center text-danger my-0 cmc"><small class="text-muted">cmc</small><br>{{ $card->cmc ?? '---' }}</h6>
@@ -231,6 +233,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Axios -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script>
     <!-- Custom JavaScript -->
     <script src="{{ asset('js/magic.js') }}" type="text/javascript"></script>
 </body>

@@ -1,7 +1,20 @@
-$(document).ready(function() {
+$(document).ready(function ()
+{
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'bottom-end',
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
+
     $('#cardFinder').on('shown.bs.modal', function () {
         $('#searchForm input').trigger('focus');
-    })
+    });
 
     $('#searchForm').on('submit', function(e) {
         e.preventDefault();
@@ -41,6 +54,10 @@ $(document).ready(function() {
     $('body').on('click', '.cardInclude', function(e) {
         e.preventDefault();
         var url = $(this).attr('href');
+        Toast.fire({
+            icon: false,
+            title: 'Card included successfully!',
+        });
         axios
             .get(url)
             .then(function (response) {
@@ -60,6 +77,10 @@ $(document).ready(function() {
     $('body').on('click', '.cardExclude', function(e) {
         e.preventDefault();
         var url = $(this).attr('href');
+        Toast.fire({
+            icon: false,
+            title: 'Card removed successfully!',
+        });
         axios
             .get(url)
             .then(function (response) {
