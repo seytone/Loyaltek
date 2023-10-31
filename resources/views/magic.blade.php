@@ -31,7 +31,7 @@
         <div class="layer"></div>
         <main class="main pt-5 pb-4">
             <div class="row text-center">
-                <div class="col-md-8 offset-md-2 col-xl-6 offset-xl-3 mb-5">
+                <div class="col-md-8 offset-md-2 col-xl-6 offset-xl-3 my-5 py-5">
                     <h1 class="text-danger">Magic: The Gathering</h1>
                     <h5 class="text-muted">A Loyaltek Assessment Test for a PHP Full Stack Positon</h5>
                     <br>
