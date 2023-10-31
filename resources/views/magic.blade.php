@@ -110,25 +110,17 @@
     <div class="modal fade" id="cardFinder" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="cardFinderLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
             <div class="modal-content bg-secondary">
-                <div class="modal-header text-center">
+                <form class="modal-header text-center" id="searchForm" action="{{ route("magic.search") }}">
+                    @csrf
                     <h3 class="text-white d-none d-md-block"><small>Card Finder</small></h3>
-                    <form class="d-none d-md-block w-50" id="searchForm" action="{{ route("magic.search") }}">
-                        @csrf
+                    <div class="w-75">
+                        <h3 class="text-white d-block d-md-none"><small>Cards Search Tool</small></h3>
                         <div class="input-group">
                             <input type="text" name="search" class="form-control" placeholder="Type something to search Cards" aria-label="Type something to search Cards" aria-describedby="button-addon2" required>
                             <button class="btn btn-outline-light" type="submit" id="button-addon2">Search</button>
                         </div>
-                    </form>
-                    <div class="row d-flex d-md-none">
-                        <h3 class="text-white"><small>Cards Search Tool</small></h3>
-                        <form action="{{ route('magic.home') }}">
-                            <div class="input-group">
-                                <input type="text" name="search" class="form-control" placeholder="Type something to search Cards" aria-label="Type something to search Cards" aria-describedby="button-addon2" required>
-                                <button class="btn btn-outline-light" type="submit" id="button-addon2">Search</button>
-                            </div>
-                        </form>
                     </div>
-                </div>
+                </form>
                 <div class="modal-body">
                     <div class="table-responsive">
                         <table class="table table-dark table-striped table-hover table-primary align-middle">
