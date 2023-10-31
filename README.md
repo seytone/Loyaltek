@@ -42,7 +42,7 @@ The application allows you the following:
 
 This project was build using Bootstrap 5, Laravel v10 and PHP v8.2
 
-## Referral Images
+## Reference Images
 
 <img src="https://imageupload.io/ib/bpYVKbtLEKQ6E8x_1698717631.jpg" width="600">
 <img src="https://imageupload.io/ib/2DZx2ZghhNhPUsI_1698717427.jpg" width="600">
