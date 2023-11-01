@@ -29,7 +29,7 @@ $(document).ready(function ()
                 if (response.data.status == 'success') {
                     $('#searchResult').html(response.data.result);
                 } else {
-                    $('#searchResult').html('<tr><td colspan="9" class="text-center"><h4 class="alert-heading">No Cards Found!</h4><p>There are no cards for your search. Try by searching with a different search terms.</p></td></tr>');
+                    $('#searchResult').html('<tr><td colspan="9" class="text-center"><div class="my-5 py-5"><h4 class="alert-heading">No Cards Found!</h4><p>There are no cards for your search. Try by searching with a different search terms.</p></div></td></tr>');
                 }
             })
             .catch(function (error) {
@@ -47,6 +47,11 @@ $(document).ready(function ()
                     $('#cardDetailBox').html(response.data.result);
                 } else {
                     $('#cardDetailBox').html('<h4 class="alert-heading">Card doesn\'t exists!</h4><p>There are no details for this card.</p>');
+                    Warning.fire({
+                        icon: false,
+                        title: '❌\n\n' + response.data.result + '\n\n'
+                    });
+                    return false;
                 }
             })
             .catch(function (error) {
@@ -78,6 +83,11 @@ $(document).ready(function ()
                     } else {
                         $('#cardsDeck').html('<div class="col text-center text-white"><h4 class="alert-heading">No Cards in Deck!</h4><p>There are no cards in your deck. Please add some cards to your deck.</p><hr><p class="mb-0 text-muted">Click on the button below to search for new cards.</p><br><button type="button" class="btn btn-dark text-uppercase" data-bs-toggle="modal" data-bs-target="#cardFinder">Search for new Cards</button><br><br></div>');
                         $('#manaCost').html('0');
+                        Warning.fire({
+                            icon: false,
+                            title: '❌\n\n' + response.data.result + '\n\n'
+                        });
+                        return false;
                     }
                 })
                 .catch(function (error) {
@@ -101,8 +111,14 @@ $(document).ready(function ()
                     $('#cardsDeck').html(response.data.result);
                     $('#manaCost').html(response.data.mana);
                 } else {
-                    $('#cardsDeck').html('<div class="col text-center text-white"><h4 class="alert-heading">No Cards in Deck!</h4><p>There are no cards in your deck. Please add some cards to your deck.</p><hr><p class="mb-0 text-muted">Click on the button below to search for new cards.</p><br><button type="button" class="btn btn-dark text-uppercase" data-bs-toggle="modal" data-bs-target="#cardFinder">Search for new Cards</button><br><br></div>');
+                    $('#cardsDeck').html('<div class="col text-center text-white my-5 py-5"><h4 class="alert-heading">No Cards in Deck!</h4><p>There are no cards in your deck. Add some cards to your deck.</p><hr><p class="mb-0 text-muted">Click on the button below to search for new cards.</p><br><button type="button" class="btn btn-dark text-uppercase" data-bs-toggle="modal" data-bs-target="#cardFinder">Search for new Cards</button><br><br></div>');
+                    $('#cardsCounter').html(0);
                     $('#manaCost').html('0');
+                    Warning.fire({
+                        icon: false,
+                        title: '❌\n\n' + response.data.result + '\n\n'
+                    });
+                    return false;
                 }
             })
             .catch(function (error) {

@@ -38,7 +38,7 @@ class MainController extends Controller
             return response()->json([
                 'code' => 422,
                 'status' => 'error',
-                'result' => false,
+                'result' => 'Error: Cards not found.',
             ]);
         }
 
@@ -84,7 +84,7 @@ class MainController extends Controller
             return response()->json([
                 'code' => 422,
                 'status' => 'error',
-                'result' => false,
+                'result' => 'Error: Card not found.',
             ]);
         }
 
@@ -140,7 +140,7 @@ class MainController extends Controller
             return response()->json([
                 'code' => 422,
                 'status' => 'error',
-                'result' => false,
+                'result' => 'Error: Card not found.',
             ]);
         }
 
@@ -189,14 +189,23 @@ class MainController extends Controller
 
     public function include($id)
     {
-        $card = Card::find($id);
+        $deck = Deck::count();
+        if ($deck == 20)
+        {
+            return response()->json([
+                'code' => 422,
+                'status' => 'error',
+                'result' => 'You can only add 20 cards to your deck.',
+            ]);
+        }
 
+        $card = Card::find($id);
         if (!isset($card))
         {
             return response()->json([
                 'code' => 422,
                 'status' => 'error',
-                'result' => false,
+                'result' => 'Error: Card not found.',
             ]);
         }
 
@@ -274,7 +283,7 @@ class MainController extends Controller
             return response()->json([
                 'code' => 422,
                 'status' => 'error',
-                'result' => false,
+                'result' => 'Error: Card not found.',
             ]);
         }
 
