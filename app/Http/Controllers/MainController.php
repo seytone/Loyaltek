@@ -260,7 +260,8 @@ class MainController extends Controller
             'code' => 200,
             'status' => 'success',
             'result' => $list,
-            'mana' => $mana
+            'mana' => $mana,
+            'cant' => count($deck)
         ]);
     }
 
@@ -284,34 +285,49 @@ class MainController extends Controller
         $list = '';
         $default = 'https://upload.wikimedia.org/wikipedia/en/thumb/a/aa/Magic_the_gathering-card_back.jpg/220px-Magic_the_gathering-card_back.jpg';
 
-        foreach ($deck as $item => $card) {
-            if (isset($card->multiverseid)) {
-                $mana += intval($card->cmc);
-                $list .= '
-                    <div class="col-6 col-md-4 col-xl-2">
-                        <div class="card bg-dark text-white mb-4">
-                            <div class="card-body custom-card p-2">
-                                <div class="text-center">
-                                    <img src="' . ($card->imageUrl ?? $default) . '" class="img-fluid w-100 rounded mb-3" alt="' . $card->name . '">
-                                </div>
-                                <h5 class="card-title">' . ($card->name ?? '---') . '</h5>
-                                <h6 class="card-subtitle text-muted">' . ($card->type ?? '---') . '</h6>
-                                <hr>
-                                <div class="row text-center">
-                                    <div class="col pr-0">
-                                        <a href="' . route('magic.card', $card->multiverseid) . '" class="cardDetails btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#cardDetails" title="SEE DETAILS"><i class="fa fa-fw fa-eye"></i></a>
+        if (count($deck) == 0)
+        {
+            $list .= '
+                <div class="col text-center text-white my-5 py-5">
+                    <h4 class="alert-heading">No Cards in your Deck!</h4>
+                    <p>There are no cards in your deck. Add some cards to your deck.</p>
+                    <hr>
+                    <p class="mb-0 text-muted">Click on the button below to search for new cards.</p>
+                    <br>
+                    <button type="button" class="btn btn-dark text-uppercase" data-bs-toggle="modal" data-bs-target="#cardFinder">Search for new Cards</button>
+                    <br><br>
+                </div>
+            ';
+        } else {
+            foreach ($deck as $item => $card) {
+                if (isset($card->multiverseid)) {
+                    $mana += intval($card->cmc);
+                    $list .= '
+                        <div class="col-6 col-md-4 col-xl-2">
+                            <div class="card bg-dark text-white mb-4">
+                                <div class="card-body custom-card p-2">
+                                    <div class="text-center">
+                                        <img src="' . ($card->imageUrl ?? $default) . '" class="img-fluid w-100 rounded mb-3" alt="' . $card->name . '">
                                     </div>
-                                    <div class="col px-0">
-                                        <h6 class="text-center text-danger my-0" style="top:-5px; position: relative;"><small class="text-muted">cmc</small><br>' . ($card->cmc ?? '---') . '</h6>
-                                    </div>
-                                    <div class="col pl-0">
-                                        <a href="' . route('magic.exclude', $card->id) . '" class="cardExclude btn btn-sm btn-outline-secondary" title="REMOVE FROM DECK"><i class="fa fa-fw fa-trash"></i></a>
+                                    <h5 class="card-title">' . ($card->name ?? '---') . '</h5>
+                                    <h6 class="card-subtitle text-muted">' . ($card->type ?? '---') . '</h6>
+                                    <hr>
+                                    <div class="row text-center">
+                                        <div class="col pr-0">
+                                            <a href="' . route('magic.card', $card->multiverseid) . '" class="cardDetails btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#cardDetails" title="SEE DETAILS"><i class="fa fa-fw fa-eye"></i></a>
+                                        </div>
+                                        <div class="col px-0">
+                                            <h6 class="text-center text-danger my-0" style="top:-5px; position: relative;"><small class="text-muted">cmc</small><br>' . ($card->cmc ?? '---') . '</h6>
+                                        </div>
+                                        <div class="col pl-0">
+                                            <a href="' . route('magic.exclude', $card->id) . '" class="cardExclude btn btn-sm btn-outline-secondary" title="REMOVE FROM DECK"><i class="fa fa-fw fa-trash"></i></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                ';
+                    ';
+                }
             }
         }
 
@@ -319,7 +335,8 @@ class MainController extends Controller
             'code' => 200,
             'status' => 'success',
             'result' => $list,
-            'mana' => $mana
+            'mana' => $mana,
+            'cant' => count($deck)
         ]);
     }
 }

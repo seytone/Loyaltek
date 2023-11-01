@@ -12,8 +12,11 @@ $(document).ready(function ()
         }
     });
 
-    $('#cardFinder').on('shown.bs.modal', function () {
-        $('#searchForm input').trigger('focus');
+    const Warning = Swal.mixin({
+        toast: true,
+        position: 'top-center',
+        showConfirmButton: true,
+        timerProgressBar: false,
     });
 
     $('#searchForm').on('submit', function(e) {
@@ -53,25 +56,34 @@ $(document).ready(function ()
 
     $('body').on('click', '.cardInclude', function(e) {
         e.preventDefault();
-        var url = $(this).attr('href');
-        Toast.fire({
-            icon: false,
-            title: 'Card included successfully!',
-        });
-        axios
-            .get(url)
-            .then(function (response) {
-                if (response.data.status == 'success') {
-                    $('#cardsDeck').html(response.data.result);
-                    $('#manaCost').html(response.data.mana);
-                } else {
-                    $('#cardsDeck').html('<div class="col text-center text-white"><h4 class="alert-heading">No Cards in Deck!</h4><p>There are no cards in your deck. Please add some cards to your deck.</p><hr><p class="mb-0 text-muted">Click on the button below to search for new cards.</p><br><button type="button" class="btn btn-dark text-uppercase" data-bs-toggle="modal" data-bs-target="#cardFinder">Search for new Cards</button><br><br></div>');
-                    $('#manaCost').html('0');
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
+        if ($('#cardsCounter').html() == 20)
+        {
+            Warning.fire({
+                icon: false,
+                title: '❌\n\nMaximum card limit reached!\n\n'
             });
+            return false;
+        } else {
+            Toast.fire({
+                icon: false,
+                title: 'Card included successfully!',
+            });
+            axios
+                .get($(this).attr('href'))
+                .then(function (response) {
+                    if (response.data.status == 'success') {
+                        $('#cardsCounter').html(response.data.cant);
+                        $('#cardsDeck').html(response.data.result);
+                        $('#manaCost').html(response.data.mana);
+                    } else {
+                        $('#cardsDeck').html('<div class="col text-center text-white"><h4 class="alert-heading">No Cards in Deck!</h4><p>There are no cards in your deck. Please add some cards to your deck.</p><hr><p class="mb-0 text-muted">Click on the button below to search for new cards.</p><br><button type="button" class="btn btn-dark text-uppercase" data-bs-toggle="modal" data-bs-target="#cardFinder">Search for new Cards</button><br><br></div>');
+                        $('#manaCost').html('0');
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
     });
 
     $('body').on('click', '.cardExclude', function(e) {
@@ -85,6 +97,7 @@ $(document).ready(function ()
             .get(url)
             .then(function (response) {
                 if (response.data.status == 'success') {
+                    $('#cardsCounter').html(response.data.cant);
                     $('#cardsDeck').html(response.data.result);
                     $('#manaCost').html(response.data.mana);
                 } else {

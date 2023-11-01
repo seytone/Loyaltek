@@ -33,7 +33,7 @@
         <div class="layer"></div>
         <main class="main pt-5 pb-4">
             <div class="row text-center">
-                <div class="col-md-8 offset-md-2 col-xl-6 offset-xl-3 my-5 py-5">
+                <div class="col-md-8 offset-md-2 col-xl-6 offset-xl-3 my-4">
                     <h1 class="text-danger">Magic: The Gathering</h1>
                     <h5 class="text-muted">A Loyaltek Assessment Test for a PHP Full Stack Positon</h5>
                     <br>
@@ -44,18 +44,18 @@
             <div class="row">
                 <div class="col-md-10 offset-md-1 col-xl-8 offset-xl-2">
                     <div class="row border-bottom border-danger mb-3">
-                        <div class="col">
-                            <h2 class="text-warning">Cards Deck</h2>
+                        <div class="col-12 col-md-6 text-center text-md-start">
+                            <h2 class="text-warning">Your Deck</h2>
                         </div>
-                        <div class="col">
-                            <h6 class="text-white text-end mt-2">Average Mana Cost: <strong id="manaCost">{{ $mana }}</strong></h6>
+                        <div class="col-12 col-md-6">
+                            <h6 class="text-white text-center text-md-end mt-2">Card Counter: <strong id="cardsCounter">{{ count($deck) }}</strong> - Average Mana Cost: <strong id="manaCost">{{ $mana }}</strong></h6>
                         </div>
                     </div>
                     <div class="row" id="cardsDeck">
                         @if (count($deck) == 0)
-                            <div class="col text-center text-white">
-                                <h4 class="alert-heading">No Cards in Deck!</h4>
-                                <p>There are no cards in your deck. Please add some cards to your deck.</p>
+                            <div class="col text-center text-white my-5 py-5">
+                                <h4 class="alert-heading">No Cards in your Deck!</h4>
+                                <p>There are no cards in your deck. Add some cards to your deck.</p>
                                 <hr>
                                 <p class="mb-0 text-muted">Click on the button below to search for new cards.</p>
                                 <br>
@@ -65,7 +65,7 @@
                         @else
                             @foreach ($deck as $item => $card)
                                 @if (isset($card->multiverseid))
-                                    <div class="col-6 col-md-4 col-xl-2">
+                                    <div class="col-6 col-md-4 col-xl-3 col-xxl-2">
                                         <div class="card bg-dark text-white mb-4">
                                             <div class="card-body custom-card p-2">
                                                 <div class="text-center">
