@@ -91,7 +91,7 @@ class MainController extends Controller
         $default = 'https://upload.wikimedia.org/wikipedia/en/thumb/a/aa/Magic_the_gathering-card_back.jpg/220px-Magic_the_gathering-card_back.jpg';
         $details = '
             <div class="text-center">
-                <img src="' . ($card->imageUrl ?? $default) . '" class="img-fluid w-100 rounded mb-3" alt="' . $card->name . '">
+                <img src="' . ($card->imageUrl ?? $default) . '" class="img-fluid rounded mb-3" alt="' . $card->name . '">
             </div>
             <hr>
             <h5 class="card-title">' . ($card->name ?? '---') . '</h5>
@@ -147,7 +147,7 @@ class MainController extends Controller
         $default = 'https://upload.wikimedia.org/wikipedia/en/thumb/a/aa/Magic_the_gathering-card_back.jpg/220px-Magic_the_gathering-card_back.jpg';
         $details = '
             <div class="text-center">
-                <img src="' . ($card->imageUrl ?? $default) . '" class="img-fluid w-100 rounded mb-3" alt="' . $card->name . '">
+                <img src="' . ($card->imageUrl ?? $default) . '" class="img-fluid rounded mb-3" alt="' . $card->name . '">
             </div>
             <hr>
             <h5 class="card-title">' . ($card->name ?? '---') . '</h5>
